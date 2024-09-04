@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', WelcomeController::class)->name('welcome');
 Route::get('/home', HomeController::class)->name('home');
-Route::get('/records', RecordsController::class)->name('records');
+Route::get('/records', [RecordsController::class, 'all'])->name('records');
+Route::post('/records', [RecordsController::class, 'upload']);
 
 Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
