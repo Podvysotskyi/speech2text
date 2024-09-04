@@ -1,0 +1,43 @@
+services:
+    php:
+        build:
+            target: dev
+        image: speech2text-php:dev
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        environment:
+            - PHP_IDE_CONFIG=serverName=speech2text
+
+    api:
+        image: speech2text-php:dev
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        environment:
+            - PHP_IDE_CONFIG=serverName=speech2text
+
+    schedule:
+        image: speech2text-php:dev
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        environment:
+            - PHP_IDE_CONFIG=serverName=speech2text
+
+    horizon:
+        image: speech2text-php:dev
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        environment:
+            - PHP_IDE_CONFIG=serverName=speech2text
+
+    vite:
+        ports:
+            - '5173:5173'
+        entrypoint: [ 'npm', 'run', 'dev' ]
+
+    pgsql:
+        ports:
+            - '5432:5432'
+
+    redis:
+        ports:
+            - '6379:6379'
