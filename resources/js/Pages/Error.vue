@@ -1,8 +1,9 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3'
-import { computed } from 'vue'
+import {Head, Link} from '@inertiajs/vue3'
+import {computed} from 'vue'
 
 const props = defineProps({
+    auth: Boolean,
     status: Number,
     request_method: String,
     debug_message: String,
@@ -50,7 +51,7 @@ const description = computed(() => {
                 </div>
             </div>
             <div class="mt-10 flex items-center justify-center gap-x-6">
-                <Link href="/" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <Link :href="props.auth ? '/home' : '/'" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     Go back home
                 </Link>
             </div>

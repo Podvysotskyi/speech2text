@@ -6,6 +6,7 @@ use App\DataValueObjects\Requests\Auth\RegisterRequestData;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
@@ -32,6 +33,8 @@ class UserService
         $user = $this->userRepository->create($data);
 
         Cache::forget('user-count');
+
+        Storage::disk('records')->makeDirectory($user->id);
 
         return $user;
     }

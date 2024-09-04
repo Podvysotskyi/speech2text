@@ -1,20 +1,34 @@
 <script setup>
-import {Head, usePage} from '@inertiajs/vue3'
-import {computed} from 'vue'
+import {Head, useForm} from '@inertiajs/vue3'
+import {useTemplateRef, ref} from 'vue'
 
 import Layout from '../../Layouts/Portal.vue'
 
-const page = usePage()
-const auth = computed(() => page.props.auth)
+const form = useForm({
+    record: null,
+})
+
+const isLoading = ref(false);
+const fileInput = useTemplateRef('fileInput')
+
+function uploadRecord(files) {
+    form.record = files[0]
+    isLoading.value = true
+    form.post('/records')
+}
 </script>
 
 <template>
-    <Head title="Home" />
+    <Head title="Home"/>
     <Layout>
         <template #nav-bar>
-            <a href="#" class="my-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                Upload New Record
-            </a>
+            <form @submit.prevent="uploadRecord">
+                <input class="hidden" type="file" ref="fileInput" @change="uploadRecord($event.target.files)">
+                <button @click.prevent="fileInput.click()" :disabled="isLoading"
+                        class="my-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    Upload New Record
+                </button>
+            </form>
         </template>
 
         <template #default>

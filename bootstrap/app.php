@@ -29,10 +29,12 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
-            return Inertia::render('Error', [
+            $data = [
                 'status' => Response::HTTP_NOT_FOUND,
                 'request_method' => $request->method(),
-            ])->toResponse($request)->setStatusCode(Response::HTTP_NOT_FOUND);
+            ];
+
+            return Inertia::render('Error', $data)->toResponse($request)->setStatusCode(Response::HTTP_NOT_FOUND);
         });
 
         $exceptions->render(function (MethodNotAllowedHttpException $e, Request $request) {

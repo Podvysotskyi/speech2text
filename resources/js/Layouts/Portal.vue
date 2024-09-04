@@ -1,5 +1,5 @@
 <script setup>
-import {router, usePage} from "@inertiajs/vue3";
+import {router, usePage} from '@inertiajs/vue3'
 import {computed, ref} from 'vue'
 
 import {
@@ -22,10 +22,12 @@ import {
 } from '@heroicons/vue/24/outline'
 import {ChevronDownIcon} from '@heroicons/vue/20/solid'
 
+const page = usePage()
+const user = computed(() => page.props.auth.user)
 
 const navigation = [
-    {name: 'Dashboard', href: '/home', icon: HomeIcon, current: true},
-    {name: 'Records', href: '/records', icon: DocumentIcon, current: false},
+    {name: 'Dashboard', href: '/home', icon: HomeIcon, current: page.url.startsWith('/home')},
+    {name: 'Records', href: '/records', icon: DocumentIcon, current: page.url.startsWith('/records')},
 ]
 
 const userNavigation = [
@@ -34,9 +36,6 @@ const userNavigation = [
 ]
 
 const sidebarOpen = ref(false)
-
-const page = usePage()
-const user = computed(() => page.props.auth.user)
 
 function logout() {
     router.post('/logout');

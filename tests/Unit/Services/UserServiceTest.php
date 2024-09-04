@@ -8,6 +8,7 @@ use App\Repositories\UserRepository;
 use App\Services\UserService;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Mockery;
 use Mockery\MockInterface;
 use Tests\Unit\TestCase;
@@ -90,6 +91,8 @@ class UserServiceTest extends TestCase
             ->once();
 
         $result = $this->testedClass->createUser($data);
+
+        Storage::disk('records')->assertExists($user->id);
 
         $this->assertSame($user, $result);
     }
