@@ -14,9 +14,9 @@ class AuthService
     ) {
     }
 
-    public function attemptLogin(string $name, string $password, ?Request $request = null): bool
+    public function attemptLogin(string $email, string $password, ?Request $request = null): bool
     {
-        if (! Auth::attempt(['name' => $name, 'password' => $password])) {
+        if (! Auth::attempt(['email' => $email, 'password' => $password])) {
             return false;
         }
 

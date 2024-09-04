@@ -43,7 +43,7 @@ class LoginRequestTest extends TestCase
     public function test_request_can_return_request_data()
     {
         $data = [
-            'name' => $this->faker->name,
+            'email' => $this->faker->email,
             'password' => $this->faker->password,
         ];
 
@@ -52,7 +52,7 @@ class LoginRequestTest extends TestCase
         $result = $this->testedClass->data();
 
         $this->assertInstanceOf(LoginRequestData::class, $result);
-        $this->assertEquals($data['name'], $result->name);
+        $this->assertEquals($data['email'], $result->email);
         $this->assertEquals($data['password'], $result->password);
     }
 }

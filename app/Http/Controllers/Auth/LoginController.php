@@ -49,7 +49,7 @@ class LoginController extends Controller implements HasMiddleware
     {
         $data = $request->data();
 
-        if ($this->authService->attemptLogin($data->name, $data->password, $request)) {
+        if ($this->authService->attemptLogin($data->email, $data->password, $request)) {
             RateLimiter::clear('login-attempts:'.$request->ip());
 
             return Redirect::route('home');
@@ -58,7 +58,7 @@ class LoginController extends Controller implements HasMiddleware
         RateLimiter::increment('login-attempts:'.$request->ip());
 
         return Redirect::back()->withErrors([
-            'name' => __('auth.failed'),
+            'email' => __('auth.failed'),
         ]);
     }
 }

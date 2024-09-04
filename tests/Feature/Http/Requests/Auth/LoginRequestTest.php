@@ -33,8 +33,8 @@ class LoginRequestTest extends TestCase
         $this->assertTrue($validator->fails());
 
         $errors = $validator->errors()->messages();
-        $this->assertArrayHasKey('name', $errors);
-        $this->assertEquals([__('validation.required', ['attribute' => 'name'])], $errors['name']);
+        $this->assertArrayHasKey('email', $errors);
+        $this->assertEquals([__('validation.required', ['attribute' => 'email'])], $errors['email']);
         $this->assertArrayHasKey('password', $errors);
         $this->assertEquals([__('validation.required', ['attribute' => 'password'])], $errors['password']);
     }

@@ -30,7 +30,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'email' => 'required|string',
             'password' => 'required|string',
         ];
     }
@@ -38,7 +38,7 @@ class LoginRequest extends FormRequest
     public function data(): LoginRequestData
     {
         return new LoginRequestData(
-            name: $this->input('name'),
+            email: $this->input('email'),
             password: $this->input('password'),
         );
     }
