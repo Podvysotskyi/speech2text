@@ -82,7 +82,7 @@ class UserServiceTest extends TestCase
         ]);
 
         $this->userRepositoryMock->shouldReceive('create')
-            ->with($data)
+            ->with($data->name, $data->email, $data->password)
             ->once()
             ->andReturn($user);
 

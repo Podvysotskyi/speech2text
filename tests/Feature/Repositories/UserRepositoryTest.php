@@ -41,7 +41,7 @@ class UserRepositoryTest extends TestCase
             password: $this->faker->password
         );
 
-        $result = $this->testedClass->create($data);
+        $result = $this->testedClass->create($data->name, $data->email, $data->password);
 
         $this->assertInstanceOf(User::class, $result);
         $this->assertEquals($data->name, $result->name);

@@ -8,12 +8,10 @@ const form = useForm({
     record: null,
 })
 
-const isLoading = ref(false);
 const fileInput = useTemplateRef('fileInput')
 
 function uploadRecord(files) {
     form.record = files[0]
-    isLoading.value = true
     form.post('/records')
 }
 </script>

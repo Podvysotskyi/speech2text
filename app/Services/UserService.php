@@ -30,7 +30,11 @@ class UserService
 
     public function createUser(RegisterRequestData $data): User
     {
-        $user = $this->userRepository->create($data);
+        $user = $this->userRepository->create(
+            name: $data->name,
+            email: $data->email,
+            password: $data->password,
+        );
 
         Cache::forget('user-count');
 

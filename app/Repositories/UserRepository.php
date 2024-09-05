@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\DataValueObjects\Requests\Auth\RegisterRequestData;
 use App\Models\User;
 
 class UserRepository
@@ -12,10 +11,14 @@ class UserRepository
         return User::query()->count();
     }
 
-    public function create(RegisterRequestData $data): User
+    public function create(string $name, string $email, string $password): User
     {
         $user = new User();
-        $user->fill($data->toArray());
+        $user->fill([
+            'name' => $name,
+            'email' => $email,
+            'password' => $password,
+        ]);
         $user->save();
 
         return $user;

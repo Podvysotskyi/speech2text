@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 class RecordRequestData extends DataValueObject
 {
     public function __construct(
-        public UploadedFile $record,
+        public UploadedFile $file,
     ) {
     }
 }

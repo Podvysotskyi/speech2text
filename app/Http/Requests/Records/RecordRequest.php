@@ -23,7 +23,7 @@ class RecordRequest extends FormRequest
     public function data(): RecordRequestData
     {
         return new RecordRequestData(
-            record: $this->file('record'),
+            file: $this->file('record'),
         );
     }
 }
