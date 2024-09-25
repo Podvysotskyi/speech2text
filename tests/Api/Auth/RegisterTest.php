@@ -59,11 +59,12 @@ class RegisterTest extends TestCase
         }));
 
         $password = $this->faker->password;
-        $this->post('/register', [
+        $response = $this->post('/register', [
             'name' => $this->faker->name,
             'email' => $this->faker->email,
             'password' => $password,
             'password_confirmation' => $password,
-        ])->assertRedirectToRoute('home');
+        ]);
+        $response->assertRedirectToRoute('home');
     }
 }

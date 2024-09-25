@@ -2,8 +2,13 @@
 
 namespace Tests\Api\Portal;
 
+use App\Models\Record;
 use App\Models\User;
+use App\Services\RecordService;
+use Illuminate\Http\UploadedFile;
 use Inertia\Testing\AssertableInertia;
+use Mockery;
+use Mockery\MockInterface;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Tests\Api\TestCase;
 
@@ -27,5 +32,23 @@ class RecordsTest extends TestCase
         $response->assertInertia(function (AssertableInertia $page) {
             $page->component('Portal/Records');
         });
+    }
+
+    public function test_user_can_upload_record(): void
+    {
+        $user = User::factory()->make();
+
+        $this->instance(RecordService::class, Mockery::mock(RecordService::class, function (MockInterface $mock) {
+            $record = Record::factory()->make();
+
+            $mock->shouldReceive('createRecord')
+                ->once()
+                ->andReturn($record);
+        }));
+
+        $response = $this->actingAs($user)->post('/records', [
+            'record' => UploadedFile::fake()->create('test.mp3'),
+        ]);
+        $response->assertRedirectToRoute('records', ['status' => 'processing']);
     }
 }

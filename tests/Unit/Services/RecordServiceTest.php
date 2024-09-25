@@ -3,6 +3,7 @@
 namespace Tests\Unit\Services;
 
 use App\DataValueObjects\Requests\Records\RecordRequestData;
+use App\DataValueObjects\Requests\Records\RecordsRequestData;
 use App\Exceptions\Records\RecordExistsException;
 use App\Models\Record;
 use App\Models\User;
@@ -74,5 +75,26 @@ class RecordServiceTest extends TestCase
         $this->assertEquals($record, $result);
 
         Storage::disk('records')->assertExists("$user->id/$record->id.mp3");
+    }
+
+    public function test_service_can_get_user_records()
+    {
+        $user = User::factory()->make();
+        $data = new RecordsRequestData(
+            status: null,
+        );
+
+        $records = collect([
+            Record::factory()->make(),
+        ]);
+
+        $this->recordRepositoryMock->shouldReceive('getRecords')
+            ->once()
+            ->with($user)
+            ->andReturn($records);
+
+        $result = $this->testedClass->getUserRecords($user, $data);
+
+        $this->assertEquals($records, $result);
     }
 }

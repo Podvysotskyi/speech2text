@@ -72,4 +72,16 @@ class RecordRepositoryTest extends TestCase
 
         $this->assertFalse($result);
     }
+
+    public function test_repository_can_get_user_records()
+    {
+        $user = User::factory()->create();
+        Record::factory()->create(['user_id' => $user->id]);
+
+        $user = User::factory()->create();
+        Record::factory()->create(['user_id' => $user->id]);
+
+        $result = $this->testedClass->getRecords($user);
+        $this->assertCount(1, $result);
+    }
 }

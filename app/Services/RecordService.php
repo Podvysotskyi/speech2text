@@ -3,11 +3,13 @@
 namespace App\Services;
 
 use App\DataValueObjects\Requests\Records\RecordRequestData;
+use App\DataValueObjects\Requests\Records\RecordsRequestData;
 use App\Exceptions\Records\RecordExistsException;
 use App\Models\Record;
 use App\Models\User;
 use App\Repositories\RecordRepository;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -45,5 +47,10 @@ class RecordService
         $hash = md5_file($file->getRealPath());
 
         return $this->recordRepository->exists($user, $hash, $name);
+    }
+
+    public function getUserRecords(User $user, RecordsRequestData $data): Collection
+    {
+        return $this->recordRepository->getRecords($user);
     }
 }

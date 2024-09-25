@@ -6,6 +6,7 @@ use App\Models\Record;
 use App\Models\User;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
 
 class RecordRepository
 {
@@ -33,5 +34,10 @@ class RecordRepository
             $query->where('name', $name)
                 ->orWhere('hash', $hash);
         })->exists();
+    }
+
+    public function getRecords(User $user): Collection
+    {
+        return $user->records()->get();
     }
 }
