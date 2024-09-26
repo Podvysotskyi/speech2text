@@ -31,9 +31,9 @@ class RecordsController extends Controller implements HasMiddleware
     }
 
     /**
-     * Show all records page.
+     * Show records page.
      */
-    public function all(RecordsRequest $request): Response
+    public function records(RecordsRequest $request): Response
     {
         $data = $request->data();
 
