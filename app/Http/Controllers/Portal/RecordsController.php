@@ -6,6 +6,7 @@ use App\Exceptions\Records\RecordExistsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Records\RecordRequest;
 use App\Http\Requests\Records\RecordsRequest;
+use App\Http\Resources\RecordResource;
 use App\Services\RecordService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -36,8 +37,12 @@ class RecordsController extends Controller implements HasMiddleware
     public function records(RecordsRequest $request): Response
     {
         $data = $request->data();
+
+        $records = $this->recordService->getUserRecords($request->user(), $data);
+
         return Inertia::render('Portal/Records', [
             'status' => $data->status,
+            'records' => RecordResource::collection($records),
         ]);
     }
 

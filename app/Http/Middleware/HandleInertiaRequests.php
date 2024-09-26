@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -46,11 +47,7 @@ class HandleInertiaRequests extends Middleware
         }
 
         return [
-            'auth.user' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-            ],
+            'auth.user' => new UserResource($user),
         ];
     }
 }
