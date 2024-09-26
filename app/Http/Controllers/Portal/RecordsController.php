@@ -36,7 +36,6 @@ class RecordsController extends Controller implements HasMiddleware
     public function records(RecordsRequest $request): Response
     {
         $data = $request->data();
-
         return Inertia::render('Portal/Records', [
             'status' => $data->status,
         ]);
