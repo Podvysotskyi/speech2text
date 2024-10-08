@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string mime
  * @property string hash
  * @property Carbon created_at
+ * @property-read RecordState state
  */
 class Record extends Model
 {

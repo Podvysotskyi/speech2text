@@ -8,6 +8,7 @@ const page = usePage()
 const auth = computed(() => page.props.auth)
 const status = computed(() => page.props.status)
 const records = computed(() => page.props.records)
+const statuses = computed(() => page.props.status_counts)
 
 </script>
 
@@ -21,20 +22,10 @@ const records = computed(() => page.props.records)
                    class="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">
                     All
                 </a>
-                <a href="/records?status=ready"
-                   :class="status === 'ready' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'"
-                   class="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">
-                    Ready
-                </a>
-                <a href="/records?status=processing"
-                   :class="status === 'processing' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'"
-                   class="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">
-                    Processing
-                </a>
-                <a href="/records?status=failed"
-                   :class="status === 'failed' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'"
-                   class="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium">
-                    Failed
+                <a :href="`/records?status=${state}`"
+                   :class="status === state ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'"
+                   class="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium" v-for="{ state, count } in statuses">
+                    {{ state }}
                 </a>
             </div>
         </template>
@@ -46,7 +37,6 @@ const records = computed(() => page.props.records)
                     <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
-
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
@@ -58,7 +48,7 @@ const records = computed(() => page.props.records)
                         {{ record.created_at }}
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-
+                        {{ record.state }}
                     </td>
                 </tr>
                 </tbody>

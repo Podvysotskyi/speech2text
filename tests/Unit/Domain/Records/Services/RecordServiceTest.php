@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Domain\Records\Services;
 
-use App\Domain\AssemblyAi\Jobs\UploadRecord;
 use App\Domain\Records\DataValueObjects\Requests\RecordRequestData;
 use App\Domain\Records\DataValueObjects\Requests\RecordsRequestData;
 use App\Domain\Records\Enums\RecordState;
@@ -14,7 +13,6 @@ use App\Models\Record;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Mockery;
 use Mockery\MockInterface;
@@ -41,8 +39,6 @@ class RecordServiceTest extends TestCase
             recordRepository: $this->recordRepositoryMock,
             recordStateRepository: $this->recordStateRepositoryMock,
         );
-
-        Queue::fake();
     }
 
     public function test_service_throws_exception_if_record_exists()
@@ -59,8 +55,6 @@ class RecordServiceTest extends TestCase
         $this->expectException(RecordExistsException::class);
 
         $this->testedClass->createRecord($user, $data);
-
-        Queue::assertNothingPushed();
     }
 
     public function test_service_can_create_record()
@@ -91,8 +85,6 @@ class RecordServiceTest extends TestCase
         $this->assertEquals($record, $result);
 
         Storage::disk('records')->assertExists("$user->id/$record->id.mp3");
-
-        Queue::assertPushed(UploadRecord::class);
     }
 
     public function test_service_can_get_user_records()

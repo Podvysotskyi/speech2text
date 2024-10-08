@@ -2,9 +2,10 @@
 
 namespace App\Domain\Records\Repositories;
 
+use App\Domain\Records\Enums\RecordState;
 use App\Models\Record;
 use App\Models\User;
-use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
@@ -36,8 +37,19 @@ class RecordRepository
         })->exists();
     }
 
-    public function getRecords(User $user): Collection
+    public function getRecords(User $user, ?string $state = null): Collection
     {
-        return $user->records()->get();
+        return $user->records()->when($state, function (Builder $query, string $state) {
+            $query->whereHas('state', function (Builder $query) use ($state) {
+                $query->where('state', $state);
+            });
+        })->get();
+    }
+
+    public function countRecords(User $user, RecordState $state): int
+    {
+        return $user->records()->whereHas('state', function (Builder $query) use ($state) {
+            $query->where('state', $state->value);
+        })->count();
     }
 }

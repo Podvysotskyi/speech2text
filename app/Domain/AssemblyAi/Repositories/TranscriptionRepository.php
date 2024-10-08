@@ -4,6 +4,7 @@ namespace App\Domain\AssemblyAi\Repositories;
 
 use App\Models\AssemblyAi\FileUpload;
 use App\Models\AssemblyAi\Transcription;
+use Illuminate\Support\Collection;
 
 class TranscriptionRepository
 {
@@ -29,5 +30,13 @@ class TranscriptionRepository
         ])->save();
 
         return $transcription;
+    }
+
+    public function getTranscriptions(string $status, int $limit = 10): Collection
+    {
+        return Transcription::query()
+            ->where('status', $status)
+            ->limit($limit)
+            ->get();
     }
 }

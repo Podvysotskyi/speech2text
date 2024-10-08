@@ -2,10 +2,12 @@
 
 namespace Tests\Api\Portal;
 
+use App\Domain\AssemblyAi\Jobs\UploadRecord;
 use App\Domain\Records\Services\RecordService;
 use App\Models\Record;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Queue;
 use Inertia\Testing\AssertableInertia;
 use Mockery;
 use Mockery\MockInterface;
@@ -14,6 +16,13 @@ use Tests\Api\TestCase;
 
 class RecordsTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Queue::fake();
+    }
+
     public function test_guest_get_redirected_to_login_page(): void
     {
         $response = $this->get('/records');
@@ -50,5 +59,7 @@ class RecordsTest extends TestCase
             'record' => UploadedFile::fake()->create('test.mp3'),
         ]);
         $response->assertRedirectToRoute('records', ['status' => 'processing']);
+
+        Queue::assertPushed(UploadRecord::class);
     }
 }

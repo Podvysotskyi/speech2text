@@ -2,6 +2,9 @@
 
 namespace App\Domain\AssemblyAi\Commands;
 
+use App\Domain\AssemblyAi\Jobs\GetTranscription;
+use App\Domain\AssemblyAi\Repositories\TranscriptionRepository;
+use App\Models\AssemblyAi\Transcription;
 use Illuminate\Console\Command;
 
 class ProcessTranscriptions extends Command
@@ -23,8 +26,12 @@ class ProcessTranscriptions extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(TranscriptionRepository $transcriptionRepository): void
     {
-        //TODO: update pending transcriptions
+        $transcriptions = $transcriptionRepository->getTranscriptions('queued');
+
+        $transcriptions->each(function (Transcription $transcription) {
+            GetTranscription::dispatch($transcription);
+        });
     }
 }

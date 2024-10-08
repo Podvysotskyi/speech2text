@@ -11,7 +11,9 @@ class RecordStateRepository
     public function updateState(Record $record, RecordStates $state): RecordState
     {
         /** @var RecordState $state */
-        $state = $record->state()->firstOrCreate([
+        $state = RecordState::query()->updateOrCreate([
+            'record_id' => $record->id,
+        ], [
             'state' => $state,
         ]);
 

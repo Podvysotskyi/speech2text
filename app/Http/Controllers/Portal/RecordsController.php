@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Portal;
 
+use App\Domain\AssemblyAi\Jobs\UploadRecord;
 use App\Domain\Records\Exceptions\Records\RecordExistsException;
 use App\Domain\Records\Services\RecordService;
 use App\Http\Controllers\Controller;
@@ -39,10 +40,12 @@ class RecordsController extends Controller implements HasMiddleware
         $data = $request->data();
 
         $records = $this->recordService->getUserRecords($request->user(), $data);
+        $counts = $this->recordService->countUserRecords($request->user());
 
         return Inertia::render('Portal/Records', [
             'status' => $data->status,
             'records' => RecordResource::collection($records),
+            'status_counts' => $counts,
         ]);
     }
 
@@ -54,7 +57,9 @@ class RecordsController extends Controller implements HasMiddleware
         $data = $request->data();
 
         try {
-            $this->recordService->createRecord($request->user(), $data);
+            $record = $this->recordService->createRecord($request->user(), $data);
+
+            UploadRecord::dispatch($record);
         } catch (RecordExistsException $e) {
             return Redirect::back()->with('error', $e->getMessage());
         }

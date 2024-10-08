@@ -13,9 +13,7 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Psr\Http\Message\ResponseInterface;
 
 class ApiService
 {
@@ -33,19 +31,8 @@ class ApiService
 
     protected function apiRequest(): PendingRequest
     {
-        $request = Http::baseUrl($this->endpoint)
-            ->withToken($this->token);
-
-        $request->withResponseMiddleware(function (ResponseInterface $response) use ($request) {
-            Log::build([
-                'driver' => 'single',
-                'path' => storage_path('logs/api.log'),
-            ])->info($request->getOptions(), (array) $response->getBody());
-
-            return $response;
-        });
-
-        return $request;
+        return Http::baseUrl($this->endpoint)
+            ->withToken($this->token, '');
     }
 
     /**
@@ -54,10 +41,10 @@ class ApiService
      */
     public function uploadFile(Record $record): FileUploadData
     {
-        $file = Storage::disk('records')->readStream("$record->user_id/$record->id");
+        $file = Storage::disk('records')->get("$record->user_id/$record->id");
 
-        $response = $this->apiRequest()->attach(
-            'attachment', $file, $record->name,
+        $response = $this->apiRequest()->withBody(
+            $file, $record->mime,
         )->post('/v2/upload')->throw();
 
         return new FileUploadData(
@@ -72,7 +59,7 @@ class ApiService
     public function transcribeAudio(FileUpload $fileUpload): TranscribeAudioData
     {
         $response = $this->apiRequest()
-            ->post('/v2/transcribe', [
+            ->post('/v2/transcript', [
                 'audio_url' => $fileUpload->url,
                 'format_text' => true,
                 'language_code' => 'en_us',
