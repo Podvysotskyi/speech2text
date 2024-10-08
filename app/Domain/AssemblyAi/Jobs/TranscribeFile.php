@@ -5,7 +5,7 @@ namespace App\Domain\AssemblyAi\Jobs;
 use App\Domain\AssemblyAi\Repositories\TranscriptionRepository;
 use App\Domain\AssemblyAi\Services\ApiService;
 use App\Domain\Records\Enums\RecordState;
-use App\Domain\Records\Repositories\RecordRepository;
+use App\Domain\Records\Repositories\RecordStateRepository;
 use App\Models\AssemblyAi\FileUpload;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -37,18 +37,18 @@ class TranscribeFile implements ShouldQueue
      * @throws RequestException
      */
     public function handle(
-        ApiService $assemblyAiService,
-        RecordRepository $recordRepository,
+        ApiService $apiService,
+        RecordStateRepository $recordStateRepository,
         TranscriptionRepository $transcriptionRepository,
     ): void {
         try {
-            $data = $assemblyAiService->transcribeAudio($this->fileUpload);
+            $data = $apiService->transcribeAudio($this->fileUpload);
 
             $transcriptionRepository->createTranscription($this->fileUpload, $data->id, $data->status);
 
-            $recordRepository->updateState($this->fileUpload->record, RecordState::Processing);
+            $recordStateRepository->updateState($this->fileUpload->record, RecordState::Processing);
         } catch (Exception $e) {
-            $recordRepository->updateState($this->fileUpload->record, RecordState::Failed);
+            $recordStateRepository->updateState($this->fileUpload->record, RecordState::Failed);
             throw $e;
         }
     }

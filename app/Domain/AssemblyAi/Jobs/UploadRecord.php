@@ -5,7 +5,7 @@ namespace App\Domain\AssemblyAi\Jobs;
 use App\Domain\AssemblyAi\Repositories\FileUploadRepository as AssemblyAiFileUploadRepository;
 use App\Domain\AssemblyAi\Services\ApiService;
 use App\Domain\Records\Enums\RecordState;
-use App\Domain\Records\Repositories\RecordRepository;
+use App\Domain\Records\Repositories\RecordStateRepository;
 use App\Models\Record;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -36,7 +36,7 @@ class UploadRecord implements ShouldQueue
     public function handle(
         ApiService $assemblyAiService,
         AssemblyAiFileUploadRepository $assemblyAiFileUploadRepository,
-        RecordRepository $recordRepository,
+        RecordStateRepository $recordStateRepository,
     ): void {
         try {
             $data = $assemblyAiService->uploadFile($this->record);
@@ -44,7 +44,7 @@ class UploadRecord implements ShouldQueue
 
             TranscribeFile::dispatch($fileUpload);
         } catch (Exception $e) {
-            $recordRepository->updateState($this->record, RecordState::Failed);
+            $recordStateRepository->updateState($this->record, RecordState::Failed);
             throw $e;
         }
     }

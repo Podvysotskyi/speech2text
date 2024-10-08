@@ -5,7 +5,7 @@ namespace App\Domain\AssemblyAi\Jobs;
 use App\Domain\AssemblyAi\Repositories\TranscriptionRepository;
 use App\Domain\AssemblyAi\Services\ApiService;
 use App\Domain\Records\Enums\RecordState;
-use App\Domain\Records\Repositories\RecordRepository;
+use App\Domain\Records\Repositories\RecordStateRepository;
 use App\Models\AssemblyAi\Transcription;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -37,12 +37,12 @@ class GetTranscription implements ShouldQueue
      * @throws RequestException
      */
     public function handle(
-        ApiService $assemblyAiService,
-        RecordRepository $recordRepository,
+        ApiService $apiService,
+        RecordStateRepository $recordStateRepository,
         TranscriptionRepository $transcriptionRepository,
     ): void {
         try {
-            $dto = $assemblyAiService->getTranscription($this->transcription);
+            $dto = $apiService->getTranscription($this->transcription);
 
             $transcriptionRepository->updateTranscription($this->transcription, $dto->status, $dto->data);
 
@@ -52,9 +52,9 @@ class GetTranscription implements ShouldQueue
 
             //TODO: Process transcription
 
-            $recordRepository->updateState($this->transcription->record, RecordState::Completed);
+            $recordStateRepository->updateState($this->transcription->record, RecordState::Completed);
         } catch (Exception $e) {
-            $recordRepository->updateState($this->transcription->record, RecordState::Failed);
+            $recordStateRepository->updateState($this->transcription->record, RecordState::Failed);
             throw $e;
         }
     }
