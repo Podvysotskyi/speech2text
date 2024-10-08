@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Http\Auth;
 
-use App\DataValueObjects\Requests\Auth\RegisterRequestData;
+use App\Domain\Users\DataValueObjects\Auth\RegisterRequestData;
 use App\Http\Requests\Auth\RegisterRequest;
 use Exception;
 use Illuminate\Foundation\Testing\WithFaker;

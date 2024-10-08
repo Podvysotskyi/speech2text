@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'assembly_ai' => [
+        'key' => env('ASSEMBLY_AI_KEY'),
+        'endpoint' => env('ASSEMBLY_AI_URL'),
+    ],
 ];

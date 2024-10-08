@@ -7,6 +7,7 @@ import Layout from '../../Layouts/Portal.vue'
 const page = usePage()
 const auth = computed(() => page.props.auth)
 const status = computed(() => page.props.status)
+const records = computed(() => page.props.records)
 
 </script>
 
@@ -39,7 +40,29 @@ const status = computed(() => page.props.status)
         </template>
 
         <template #default>
-            <h1>RECORDS</h1>
+            <table class="min-w-full divide-y divide-gray-300">
+                <thead>
+                <tr>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                <tr v-for="record in records" :key="record.id">
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                        {{ record.name }}.{{ record.extension }}
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {{ record.created_at }}
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </template>
     </Layout>
 </template>

@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -16,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string email
  * @property string password
  */
-class User extends Authenticatable
+class User extends AuthUser
 {
     use HasApiTokens, HasFactory, HasUuids, Notifiable;
 

@@ -21,6 +21,7 @@ class RecordResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => substr($this->name, 0, strlen($this->name) - strlen($this->extension) - 1),
+            'extension' => $this->extension,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }

@@ -30,6 +30,8 @@ services:
         image: speech2text-php
         depends_on:
             - php
+            - redis
+            - pgsql
         restart: on-failure
         volumes:
             - ./:/app
@@ -39,6 +41,8 @@ services:
         image: speech2text-php
         depends_on:
             - php
+            - redis
+            - pgsql
         restart: on-failure
         volumes:
             - ./:/app

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Http\Records;
 
-use App\DataValueObjects\Requests\Records\RecordRequestData;
+use App\Domain\Records\DataValueObjects\Requests\RecordRequestData;
 use App\Http\Requests\Records\RecordRequest;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;

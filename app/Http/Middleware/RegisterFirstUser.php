@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Services\UserService;
+use App\Domain\Users\Services\UserService;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;

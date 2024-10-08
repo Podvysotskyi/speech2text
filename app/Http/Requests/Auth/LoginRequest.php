@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\DataValueObjects\Requests\Auth\LoginRequestData;
+use App\Domain\Users\DataValueObjects\Auth\LoginRequestData;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\RateLimiter;

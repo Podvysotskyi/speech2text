@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Http\Auth;
 
-use App\DataValueObjects\Requests\Auth\LoginRequestData;
+use App\Domain\Users\DataValueObjects\Auth\LoginRequestData;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\RateLimiter;

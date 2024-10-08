@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Portal;
 
-use App\Exceptions\Records\RecordExistsException;
+use App\Domain\Records\Exceptions\Records\RecordExistsException;
+use App\Domain\Records\Services\RecordService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Records\RecordRequest;
 use App\Http\Requests\Records\RecordsRequest;
 use App\Http\Resources\RecordResource;
-use App\Services\RecordService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\Redirect;

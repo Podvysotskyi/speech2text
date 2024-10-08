@@ -2,9 +2,9 @@
 
 namespace Tests\Api\Portal;
 
+use App\Domain\Records\Services\RecordService;
 use App\Models\Record;
 use App\Models\User;
-use App\Services\RecordService;
 use Illuminate\Http\UploadedFile;
 use Inertia\Testing\AssertableInertia;
 use Mockery;

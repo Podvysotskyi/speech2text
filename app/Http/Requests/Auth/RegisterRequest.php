@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\DataValueObjects\Requests\Auth\RegisterRequestData;
+use App\Domain\Users\DataValueObjects\Auth\RegisterRequestData;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;

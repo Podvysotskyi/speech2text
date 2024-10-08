@@ -2,9 +2,9 @@
 
 namespace Tests\Api\Auth;
 
+use App\Domain\Users\Services\AuthService;
+use App\Domain\Users\Services\UserService;
 use App\Models\User;
-use App\Services\AuthService;
-use App\Services\UserService;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\RateLimiter;
 use Inertia\Testing\AssertableInertia;

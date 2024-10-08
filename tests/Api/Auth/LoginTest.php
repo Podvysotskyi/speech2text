@@ -2,8 +2,8 @@
 
 namespace Tests\Api\Auth;
 
+use App\Domain\Users\Services\UserService;
 use App\Models\User;
-use App\Services\UserService;
 use Inertia\Testing\AssertableInertia;
 use Mockery\MockInterface;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;

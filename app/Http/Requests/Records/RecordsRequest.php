@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Records;
 
-use App\DataValueObjects\Requests\Records\RecordsRequestData;
+use App\Domain\Records\DataValueObjects\Requests\RecordsRequestData;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
