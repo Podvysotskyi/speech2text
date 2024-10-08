@@ -84,7 +84,7 @@ class RecordServiceTest extends TestCase
 
         $this->assertEquals($record, $result);
 
-        Storage::disk('records')->assertExists("$user->id/$record->id.mp3");
+        Storage::disk('records')->assertExists("$user->id/$record->id");
     }
 
     public function test_service_can_get_user_records()
@@ -100,7 +100,7 @@ class RecordServiceTest extends TestCase
 
         $this->recordRepositoryMock->shouldReceive('getRecords')
             ->once()
-            ->with($user)
+            ->with($user, null)
             ->andReturn($records);
 
         $result = $this->testedClass->getUserRecords($user, $data);
