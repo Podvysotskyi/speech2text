@@ -4,6 +4,7 @@ namespace Tests\Unit\Domain\Records\Services;
 
 use App\Domain\Records\DataValueObjects\Requests\RecordRequestData;
 use App\Domain\Records\DataValueObjects\Requests\RecordsRequestData;
+use App\Domain\Records\DataValueObjects\Response\RecordStateCountData;
 use App\Domain\Records\Enums\RecordState;
 use App\Domain\Records\Exceptions\Records\RecordExistsException;
 use App\Domain\Records\Repositories\RecordRepository;
@@ -106,5 +107,29 @@ class RecordServiceTest extends TestCase
         $result = $this->testedClass->getUserRecords($user, $data);
 
         $this->assertEquals($records, $result);
+    }
+
+    public function test_service_can_count_user_records()
+    {
+        $user = User::factory()->make();
+
+        $expectedResult = [];
+
+        $states = RecordState::cases();
+        foreach ($states as $state) {
+            $count = $this->faker->numberBetween(1, 10);
+            $this->recordRepositoryMock
+                ->shouldReceive('countRecords')
+                ->with($user, $state)
+                ->andReturn($count);
+            $expectedResult[] = new RecordStateCountData(
+                state: $state->value,
+                count: $count,
+            );
+        }
+
+        $result = $this->testedClass->countUserRecords($user);
+
+        $this->assertEquals($expectedResult, $result->toArray());
     }
 }
