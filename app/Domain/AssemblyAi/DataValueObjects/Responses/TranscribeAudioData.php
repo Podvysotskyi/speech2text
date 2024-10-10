@@ -9,6 +9,7 @@ readonly class TranscribeAudioData extends DataValueObject
     public function __construct(
         public string $id,
         public string $status,
+        public ?array $utterances = null,
         public ?array $data = null,
     ) {
     }

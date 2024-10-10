@@ -86,6 +86,7 @@ class ApiService
         return new TranscribeAudioData(
             id: $response->json('id'),
             status: $response->json('status'),
+            utterances: $response->json('utterances'),
             data: $response->json(),
         );
     }

@@ -2,7 +2,7 @@
 
 namespace App\Domain\AssemblyAi\Commands;
 
-use App\Domain\AssemblyAi\Jobs\GetTranscription;
+use App\Domain\AssemblyAi\Jobs\UpdateTranscription;
 use App\Domain\AssemblyAi\Repositories\TranscriptionRepository;
 use App\Models\AssemblyAi\Transcription;
 use Illuminate\Console\Command;
@@ -21,7 +21,7 @@ class ProcessTranscriptions extends Command
      *
      * @var string
      */
-    protected $description = 'Process Transcriptions';
+    protected $description = 'Process RecordTranscription';
 
     /**
      * Execute the console command.
@@ -31,7 +31,7 @@ class ProcessTranscriptions extends Command
         $transcriptions = $transcriptionRepository->getTranscriptions('queued');
 
         $transcriptions->each(function (Transcription $transcription) {
-            GetTranscription::dispatch($transcription);
+            UpdateTranscription::dispatch($transcription);
         });
     }
 }

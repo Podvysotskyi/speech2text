@@ -36,6 +36,18 @@ class Transcription extends Model
         'data',
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'data' => 'array',
+        ];
+    }
+
     public function record(): BelongsTo
     {
         return $this->belongsTo(Record::class);

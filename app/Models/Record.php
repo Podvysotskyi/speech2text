@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -44,5 +45,15 @@ class Record extends Model
     public function state(): HasOne
     {
         return $this->hasOne(RecordState::class);
+    }
+
+    public function transcription(): HasOne
+    {
+        return $this->hasOne(RecordTranscription::class);
+    }
+
+    public function speakers(): HasMany
+    {
+        return $this->hasMany(RecordTranscriptionSpeaker::class);
     }
 }

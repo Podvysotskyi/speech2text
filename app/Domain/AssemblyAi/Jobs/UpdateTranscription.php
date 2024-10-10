@@ -15,7 +15,7 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Queue\SerializesModels;
 
-class GetTranscription implements ShouldQueue
+class UpdateTranscription implements ShouldQueue
 {
     use Dispatchable, Queueable, SerializesModels;
 
@@ -50,9 +50,7 @@ class GetTranscription implements ShouldQueue
                 return;
             }
 
-            //TODO: Process transcription
-
-            $recordStateRepository->updateState($this->transcription->record, RecordState::Completed);
+            ProcessTranscription::dispatch($this->transcription);
         } catch (Exception $e) {
             $recordStateRepository->updateState($this->transcription->record, RecordState::Failed);
             throw $e;
