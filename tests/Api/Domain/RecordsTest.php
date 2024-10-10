@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Api\Portal;
+namespace Tests\Api\Domain;
 
 use App\Domain\AssemblyAi\Jobs\UploadRecord;
 use App\Domain\Records\Services\RecordService;
@@ -39,7 +39,7 @@ class RecordsTest extends TestCase
         $response->assertStatus(HttpResponse::HTTP_OK);
 
         $response->assertInertia(function (AssertableInertia $page) {
-            $page->component('Portal/Records');
+            $page->component('Domain/Records');
         });
     }
 

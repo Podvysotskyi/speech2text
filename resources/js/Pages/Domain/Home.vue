@@ -1,6 +1,6 @@
 <script setup>
 import {Head, useForm} from '@inertiajs/vue3'
-import {useTemplateRef, ref} from 'vue'
+import {useTemplateRef} from 'vue'
 
 import Layout from '../../Layouts/Portal.vue'
 
@@ -22,7 +22,7 @@ function uploadRecord(files) {
         <template #nav-bar>
             <form @submit.prevent="uploadRecord">
                 <input class="hidden" type="file" ref="fileInput" @change="uploadRecord($event.target.files)">
-                <button @click.prevent="fileInput.click()" :disabled="isLoading"
+                <button @click.prevent="fileInput.click()"
                         class="my-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                     Upload New Record
                 </button>

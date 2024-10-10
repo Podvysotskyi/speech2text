@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string hash
  * @property Carbon created_at
  * @property-read RecordState state
+ * @property-read Collection transcriptions
  */
 class Record extends Model
 {
@@ -47,9 +49,9 @@ class Record extends Model
         return $this->hasOne(RecordState::class);
     }
 
-    public function transcription(): HasOne
+    public function transcriptions(): HasMany
     {
-        return $this->hasOne(RecordTranscription::class);
+        return $this->HasMany(RecordTranscription::class);
     }
 
     public function speakers(): HasMany

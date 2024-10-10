@@ -22,8 +22,13 @@ class RecordResource extends JsonResource
             'id' => $this->id,
             'name' => substr($this->name, 0, strlen($this->name) - strlen($this->extension) - 1),
             'extension' => $this->extension,
-            'state' => $this->state->state,
+            'state' => $this->whenLoaded('state', function () {
+                return $this->state->state;
+            }),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'transcriptions' => $this->whenLoaded('transcriptions', function () {
+                return RecordTranscriptionResource::collection($this->transcriptions);
+            }),
         ];
     }
 }

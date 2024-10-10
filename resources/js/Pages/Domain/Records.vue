@@ -13,7 +13,7 @@ const statuses = computed(() => page.props.status_counts)
 </script>
 
 <template>
-    <Head title="Home" />
+    <Head title="Records" />
     <Layout>
         <template #nav-bar>
             <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -37,6 +37,7 @@ const statuses = computed(() => page.props.status_counts)
                     <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6"></th>
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
@@ -49,6 +50,14 @@ const statuses = computed(() => page.props.status_counts)
                     </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {{ record.state }}
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-right text-sm text-gray-500" v-if="record.state === 'Completed'">
+                        <a :href="`/records/${record.id}/export`" class="mr-2 inline-flex items-center rounded-md bg-white px-2.5 py-1.5 font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white">
+                            Download
+                        </a>
+                        <a :href="`/records/${record.id}`" class="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white">
+                            View
+                        </a>
                     </td>
                 </tr>
                 </tbody>

@@ -21,7 +21,7 @@ class RecordTranscriptionRepository
     public function createTranscription(Record $record, RecordTranscriptionSpeaker $speaker, string $text, int $start, int $end): RecordTranscription
     {
         /** @var RecordTranscription $transcription */
-        $transcription = $record->transcription()->create([
+        $transcription = $record->transcriptions()->create([
             'speaker_id' => $speaker->id,
             'text' => $text,
             'start' => $start,

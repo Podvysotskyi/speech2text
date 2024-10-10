@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Api\Portal;
+namespace Tests\Api\Domain;
 
 use App\Models\User;
 use Inertia\Testing\AssertableInertia;
@@ -25,7 +25,7 @@ class HomeTest extends TestCase
         $response->assertStatus(HttpResponse::HTTP_OK);
 
         $response->assertInertia(function (AssertableInertia $page) {
-            $page->component('Portal/Home');
+            $page->component('Domain/Home');
         });
     }
 }

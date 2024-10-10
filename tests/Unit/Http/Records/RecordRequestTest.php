@@ -3,7 +3,7 @@
 namespace Tests\Unit\Http\Records;
 
 use App\Domain\Records\DataValueObjects\Requests\RecordRequestData;
-use App\Http\Requests\Records\RecordRequest;
+use App\Http\Requests\Records\UploadRecordRequest;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Validator;
@@ -13,13 +13,13 @@ class RecordRequestTest extends TestCase
 {
     use WithFaker;
 
-    protected RecordRequest $testedClass;
+    protected UploadRecordRequest $testedClass;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->testedClass = new RecordRequest();
+        $this->testedClass = new UploadRecordRequest();
     }
 
     public function test_request_can_validate_data()

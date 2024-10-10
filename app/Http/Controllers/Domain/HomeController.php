@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Portal;
+namespace App\Http\Controllers\Domain;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -21,6 +21,6 @@ class HomeController extends Controller implements HasMiddleware
      */
     public function __invoke(): Response
     {
-        return Inertia::render('Portal/Home');
+        return Inertia::render('Domain/Home');
     }
 }
