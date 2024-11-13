@@ -1,4 +1,4 @@
-@foreach($record->transcriptions as $transcription)
+@foreach($transcriptions as $transcription)
 {{ $transcription->speaker->name }}:
 {{ $transcription->text }}
 

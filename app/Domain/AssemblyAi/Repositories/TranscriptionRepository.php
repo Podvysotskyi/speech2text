@@ -32,10 +32,10 @@ class TranscriptionRepository
         return $transcription;
     }
 
-    public function getTranscriptions(string $status, int $limit = 10): Collection
+    public function getTranscriptions(array $status, int $limit = 10): Collection
     {
         return Transcription::query()
-            ->where('status', $status)
+            ->whereIn('status', $status)
             ->limit($limit)
             ->get();
     }

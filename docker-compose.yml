@@ -53,7 +53,7 @@ services:
         image: speech2text-node
         volumes:
             - ./:/app
-        command: [ 'npm', 'install' ]
+        command: [ 'npm', 'ci' ]
 
     vite:
         depends_on:

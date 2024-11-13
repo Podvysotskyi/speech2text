@@ -84,9 +84,16 @@ class RecordsController extends Controller implements HasMiddleware
 
     public function export(RecordRequest $request, Record $record): \Illuminate\Http\Response
     {
-        $record->load(['transcriptions', 'transcriptions.speaker']);
+        $transcriptions = $record->transcriptions()
+            ->with(['speaker'])
+            ->orderBy('start')
+            ->get();
 
-        $content = View::make('record', ['record' => $record])->render();
+        $html = View::make('record', [
+            'transcriptions' => $transcriptions,
+        ])->render();
+        $content = htmlspecialchars_decode($html);
+
         $filename = substr($record->name, 0, strlen($record->name) - strlen($record->extension) - 1);
 
         return Response::make($content, 200, [

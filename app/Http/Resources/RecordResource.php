@@ -27,7 +27,7 @@ class RecordResource extends JsonResource
             }),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'transcriptions' => $this->whenLoaded('transcriptions', function () {
-                return RecordTranscriptionResource::collection($this->transcriptions);
+                return RecordTranscriptionResource::collection($this->transcriptions->sortBy('start'));
             }),
         ];
     }

@@ -28,7 +28,7 @@ class ProcessTranscriptions extends Command
      */
     public function handle(TranscriptionRepository $transcriptionRepository): void
     {
-        $transcriptions = $transcriptionRepository->getTranscriptions('queued');
+        $transcriptions = $transcriptionRepository->getTranscriptions(['queued', 'processing']);
 
         $transcriptions->each(function (Transcription $transcription) {
             UpdateTranscription::dispatch($transcription);
